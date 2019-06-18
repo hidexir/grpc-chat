@@ -1,0 +1,14 @@
+syntax = "proto3";
+package upload;
+
+service Chat {
+  rpc InRoom(InRoomReq) returns (InRoomRes) {};
+}
+
+message InRoomReq { 
+  bytes RoomID = 1
+}
+
+message InRoomRes { 
+  string RoomID = 1; 
+}
