@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"net"
 
@@ -25,9 +26,25 @@ func main() {
 	server.Serve(listenPort)
 }
 
-func (ChatService) SendMessage(ctx context.Context, in *SendMessageReq) (*pb.SendMessageRes, error) {
+func (ChatService) SendMessage(ctx context.Context, in *pb.SendMessageReq) (*pb.SendMessageRes, error) {
 	fmt.Println("sucsess!")
 	return nil, nil
 }
-func InRoom(stream pb.Chat_InRoomServer) error {
+
+func (ChatService) InRoom(stream pb.Chat_InRoomServer) error {
+	// 無限ループ
+	hoge := &pb.InRoomRes{
+		RoomID: "",
+	}
+	for {
+		req, err := stream.Recv()
+		fmt.Println(req.RoomID)
+		err = stream.Send(hoge)
+		if err == io.EOF {
+			return err
+		}
+		if err != nil {
+			return err
+		}
+	}
 }

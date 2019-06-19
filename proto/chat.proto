@@ -1,5 +1,5 @@
 syntax = "proto3";
-package upload;
+package proto;
 
 service Chat {
   rpc InRoom(stream InRoomReq) returns (stream InRoomRes) {}
