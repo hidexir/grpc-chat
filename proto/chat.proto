@@ -2,13 +2,22 @@ syntax = "proto3";
 package upload;
 
 service Chat {
-  rpc InRoom(InRoomReq) returns (InRoomRes) {};
+  rpc InRoom(stream InRoomReq) returns (stream InRoomRes) {}
+  rpc SendMessage(SendMessageReq) returns (SendMessageRes) {}
 }
 
 message InRoomReq { 
-  bytes RoomID = 1
+  bytes RoomID = 1;
 }
 
 message InRoomRes { 
   string RoomID = 1; 
+}
+
+message SendMessageReq { 
+  string Body = 1; 
+}
+
+message SendMessageRes { 
+  string Body = 1; 
 }
